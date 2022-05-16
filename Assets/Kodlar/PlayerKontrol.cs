@@ -8,16 +8,16 @@ public class PlayerKontrol : MonoBehaviour
     float horizontal = 0;
     float vertical = 0;
     Vector3 vec;
-    public float karakterHiz;
-    public float minX;
-    public float maxX;
-    public float minZ;
-    public float maxZ;
-    public float egim;
     float atesZamani = 0;
-    public float saldiriHizi;
-    public GameObject kursun;
-    public Transform kursuncikmaYeri;
+    [SerializeField] private float karakterHiz;
+    [SerializeField] private float minX;
+    [SerializeField] private float maxX;
+    [SerializeField] private float minZ;
+    [SerializeField] private float maxZ;
+    [SerializeField] private float egim;
+    [SerializeField] private float saldiriHizi;
+    [SerializeField] private GameObject kursun;
+    [SerializeField] private Transform kursuncikmaYeri;
     new AudioSource audio;
 
     void Start()

@@ -24,7 +24,8 @@ public class TemasPatlama : MonoBehaviour
             Destroy(col.gameObject);
             Destroy(gameObject);
             Instantiate(patlama,transform.position,transform.rotation);
-            kontrol.scoreArttir(10);
+            if(col.tag == "kursun")
+                kontrol.scoreArttir(10);
         }
         if (col.tag == "Player")
         {
