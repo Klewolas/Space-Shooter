@@ -14,16 +14,21 @@ public class OyunKontrol : MonoBehaviour
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text gameOverText;
     [SerializeField] private TMP_Text restartText;
+
+    [SerializeField] private int WinScore;
+
+    [SerializeField] private GameObject Patlama;
     
     
     int score;
     bool yenidenBaslaKontrol = false;
     bool oyunBittiKontrol = false;
+
     void Start()
     {
         score = 0;
         scoreText.text = "Score: " + score;
-        StartCoroutine(olustur());
+        StartCoroutine(AsteroidOlustur());
     }
 
     void Update()
@@ -33,14 +38,17 @@ public class OyunKontrol : MonoBehaviour
             SceneManager.LoadScene("Level1");
         }
     }
-    IEnumerator olustur()
+    IEnumerator AsteroidOlustur()
     {
         yield return new WaitForSeconds(baslangicBekleme);
         while(true)
         {
-            Vector3 vec = new Vector3(Random.Range(-randomPos.x, randomPos.x), 0, randomPos.z);
-            Instantiate(asteroid, vec, Quaternion.identity);
-            yield return new WaitForSeconds(olusturmaBekleme);
+            if(!oyunBittiKontrol)
+            {
+                Vector3 vec = new Vector3(Random.Range(-randomPos.x, randomPos.x), 0, randomPos.z);
+                Instantiate(asteroid, vec, Quaternion.identity);
+                yield return new WaitForSeconds(olusturmaBekleme);
+            }
 
             if (oyunBittiKontrol)
             {
@@ -50,14 +58,28 @@ public class OyunKontrol : MonoBehaviour
             }
         }
     }
-    public void scoreArttir (int gelenScore)
+    public void ScoreArttir (int gelenScore)
     {
         score += gelenScore;
         scoreText.text = "Score: " + score;
+        if (score >= WinScore)
+            Kazandin();
     }
-    public void oyunBitti()
+    public void OyunBitti()
     {
         gameOverText.text = "GAME OVER!!";
         oyunBittiKontrol = true;
+    }
+
+    private void Kazandin()
+    {
+        gameOverText.text = "YOU WIN!!";
+        oyunBittiKontrol = true;
+        var clones = GameObject.FindGameObjectsWithTag("asteroid");
+        foreach (var clone in clones)
+        {
+            Instantiate(Patlama, clone.transform.position, clone.transform.rotation);
+            Destroy(clone);
+        }
     }
 }

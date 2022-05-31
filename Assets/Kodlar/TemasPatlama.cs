@@ -13,9 +13,9 @@ public class TemasPatlama : MonoBehaviour
     void Start()
     {
         oyunKontrol = GameObject.FindGameObjectWithTag("oyunKontrol");
-        kontrol = oyunKontrol.GetComponent<OyunKontrol>();
-        
+        kontrol = oyunKontrol.GetComponent<OyunKontrol>();  
     }
+
 
     void OnTriggerEnter(Collider col)
     {
@@ -25,12 +25,12 @@ public class TemasPatlama : MonoBehaviour
             Destroy(gameObject);
             Instantiate(patlama,transform.position,transform.rotation);
             if(col.tag == "kursun")
-                kontrol.scoreArttir(10);
+                kontrol.ScoreArttir(10);
         }
         if (col.tag == "Player")
         {
             Instantiate(playerPatlama, col.transform.position, col.transform.rotation);
-            kontrol.oyunBitti();
+            kontrol.OyunBitti();
         }
     }
 }
